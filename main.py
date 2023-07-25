@@ -342,6 +342,8 @@ class GameManager:
         #    X O X
         #      X
         """
+        if coordinates is None:
+            return 
         result = [
             (coordinates[X] + 1 , coordinates[Y]), 
             (coordinates[X] - 1 , coordinates[Y]), 
@@ -371,6 +373,9 @@ class GameManager:
             arguments : coordinate, the coordinate to check
             return : bool True if it is a opponent unit , False otherwise
         """
+        if coordinate is None:
+            return 
+
         if self._board[coordinate[X]][coordinate[Y]] == cell.BLACK and self._turn == cell.WHITE:
             return True
         if self._board[coordinate[X]][coordinate[Y]] == cell.WHITE and self._turn == cell.BLACK:
@@ -386,6 +391,9 @@ class GameManager:
             arguments: coordinates int, the opponent units coordinates 
             return : bool True if these opponent units can be captured, False otherwise
         """
+        if coordinates is None:
+            return 
+
         travelled = set()
         query = [coordinates]#using stack for  DFS , it will reach all the enemy units that is connected and will check if there are at least 1 safe points for the enemy
 
@@ -440,6 +448,8 @@ class GameManager:
         """
             this function will check if the coordinate that player state.PLACE will result in a corrupted stones (commit suicide)
         """
+        if coordinate is None:
+            return 
         query = [coordinate]
         travelled = set()
 
@@ -506,6 +516,8 @@ class GameManager:
             arguments: coordinate int, the coordinates of the cell.EMPTY cell to start searching
             return: None 
         """
+        if coordinate is None:
+            return 
 
         travelled = set()
         query = [coordinate] # using stack for dfs
@@ -528,7 +540,7 @@ class GameManager:
         if len(type_endcounters) > 1:# if there are multible units that posses these cells , then no players get a point
             return 
 
-        type = type_endcounters.pop()
+        type = type_endcounters.pop() if len(type_endcounters) > 1 else None
 
         if type == cell.BLACK:
             self._collected_and_add_point_for_black(travelled)
